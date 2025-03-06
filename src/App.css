@@ -10,10 +10,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .app-container {
   text-align: center;
-  background: url('https://assets.ccbp.in/frontend/react-js/match-game-bg.png');
-
+  background: url('https://assets.ccbp.in/frontend/react-js/match-game-bg.png')
+    no-repeat center center fixed;
   background-size: cover;
   min-height: 100vh;
   color: #fff;
@@ -37,17 +38,24 @@ header {
   transform: scale(1.1);
 }
 
-.score-timer {
+.nav-list {
   display: flex;
   gap: 20px;
   font-size: 1.2em;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .score,
 .timer {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  margin: 0;
 }
 
 .timer-icon {
@@ -82,9 +90,6 @@ header {
   max-width: 400px;
   margin: 20px auto;
   border-radius: 10px;
-  /* Removed the white border */
-  /* border: 2px solid #fff; */
-  /* Adjusted box-shadow to avoid border-like effect */
   box-shadow: none;
   transition: transform 0.3s ease;
 }
@@ -98,6 +103,12 @@ header {
   justify-content: center;
   gap: 15px;
   margin: 20px 0;
+  list-style: none;
+  padding: 0;
+}
+
+.tab-item {
+  display: flex;
 }
 
 .tab {
@@ -133,12 +144,23 @@ header {
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  list-style: none;
+}
+
+.thumbnail-item {
+  display: flex;
+}
+
+.thumbnail-button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 .thumbnail {
   width: 100px;
   height: 100px;
-  cursor: pointer;
   border-radius: 8px;
   transition:
     transform 0.3s ease,
@@ -240,7 +262,7 @@ header {
     height: 40px;
   }
 
-  .score-timer {
+  .nav-list {
     font-size: 1em;
     gap: 10px;
   }

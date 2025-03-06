@@ -254,6 +254,7 @@ const App = () => {
   const [activeTab, setActiveTab] = useState('FRUIT')
   const [currentImage, setCurrentImage] = useState(imagesList[0].imageUrl)
   const [gameOver, setGameOver] = useState(false)
+  const [feedback, setFeedback] = useState('')
 
   // Timer effect
   useEffect(() => {
@@ -262,6 +263,7 @@ const App = () => {
       return () => clearInterval(timer)
     } else if (time === 0) {
       setGameOver(true)
+      setFeedback('Time’s up!')
     }
   }, [time, gameOver])
 
@@ -269,7 +271,7 @@ const App = () => {
   const handleThumbnailClick = thumbnailUrl => {
     if (thumbnailUrl === currentImage) {
       setScore(prev => prev + 1)
-
+      setFeedback('Correct!')
       const remainingImages = imagesList.filter(
         img => img.imageUrl !== currentImage,
       )
@@ -277,6 +279,7 @@ const App = () => {
       setCurrentImage(remainingImages[randomIndex].imageUrl)
     } else {
       setGameOver(true)
+      setFeedback('Wrong! Game Over!')
     }
   }
 
@@ -287,21 +290,42 @@ const App = () => {
     setActiveTab('FRUIT')
     setCurrentImage(imagesList[0].imageUrl)
     setGameOver(false)
+    setFeedback('')
   }
+
+  // Render nav items (for header)
+  const renderNavItems = () => (
+    <ul className="nav-list">
+      <li className="nav-item">
+        <p className="score">Score: {score}</p>
+      </li>
+      <li className="nav-item">
+        <p className="timer">
+          <img
+            src="https://assets.ccbp.in/frontend/react-js/match-game-timer-img.png"
+            alt="timer"
+            className="timer-icon"
+          />
+          {time} sec
+        </p>
+      </li>
+    </ul>
+  )
 
   // Render tabs
   const renderTabs = () => (
-    <div className="tabs-container">
+    <ul className="tabs-container">
       {tabsList.map(tab => (
-        <button
-          key={tab.tabId}
-          className={`tab ${activeTab === tab.tabId ? 'active' : ''}`}
-          onClick={() => setActiveTab(tab.tabId)}
-        >
-          {tab.displayText}
-        </button>
+        <li key={tab.tabId} className="tab-item">
+          <button
+            className={`tab ${activeTab === tab.tabId ? 'active' : ''}`}
+            onClick={() => setActiveTab(tab.tabId)}
+          >
+            {tab.displayText}
+          </button>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 
   // Render thumbnails
@@ -310,17 +334,22 @@ const App = () => {
       image => image.category === activeTab,
     )
     return (
-      <div className="thumbnails-container">
+      <ul className="thumbnails-container">
         {filteredImages.map(image => (
-          <img
-            key={image.id}
-            src={image.thumbnailUrl}
-            alt="thumbnail"
-            className="thumbnail"
-            onClick={() => handleThumbnailClick(image.imageUrl)}
-          />
+          <li key={image.id} className="thumbnail-item">
+            <button
+              className="thumbnail-button"
+              onClick={() => handleThumbnailClick(image.imageUrl)}
+            >
+              <img
+                src={image.thumbnailUrl}
+                alt="thumbnail"
+                className="thumbnail"
+              />
+            </button>
+          </li>
         ))}
-      </div>
+      </ul>
     )
   }
 
@@ -354,18 +383,9 @@ const App = () => {
           alt="website logo"
           className="logo"
         />
-        <div className="score-timer">
-          <span className="score">Score: {score}</span>
-          <span className="timer">
-            <img
-              src="https://assets.ccbp.in/frontend/react-js/match-game-timer-img.png"
-              alt="timer"
-              className="timer-icon"
-            />
-            {time} sec
-          </span>
-        </div>
+        {renderNavItems()}
       </header>
+      {feedback && <div className="feedback">{feedback}</div>}
       {!gameOver ? (
         <>
           <div className="match-image">
