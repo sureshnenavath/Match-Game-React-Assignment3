@@ -297,7 +297,8 @@ const App = () => {
   const renderNavItems = () => (
     <ul className="nav-list">
       <li className="nav-item">
-        <p className="score">Score: {score}</p>
+        <p>Score:</p>
+        <p className="score-value">{score}</p>
       </li>
       <li className="nav-item">
         <p className="timer">
